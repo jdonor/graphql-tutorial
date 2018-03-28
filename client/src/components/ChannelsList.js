@@ -1,6 +1,7 @@
 import React from 'react';
 import { Query,} from 'react-apollo';
 import gql from 'graphql-tag';
+import AddChannel from './AddChannel';
 
 const ChannelsList = () => (
   <Query
@@ -18,9 +19,10 @@ const ChannelsList = () => (
       if (error) return <p>{error.message}</p>;
 
       return (
-        <ul>
-          {data.channels.map(channel => <li key={channel.id}>{channel.name}</li>)}
-        </ul>
+        <div className="channelsList">
+          <AddChannel />
+          {data.channels.map(channel => <div key={channel.id} className="channel">{channel.name}</div>)}
+        </div>
       );
     }}
   </Query>

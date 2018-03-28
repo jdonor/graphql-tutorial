@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import ChannelsList from './components/ChannelsList';
 
 import ApolloClient from 'apollo-client';
-import { Query, graphql, ApolloProvider } from 'react-apollo';
-import gql from 'graphql-tag';
+import { ApolloProvider } from 'react-apollo';
 
 import { makeExecutableSchema, addMockFunctionsToSchema } from 'graphql-tools';
 import { InMemoryCache } from 'apollo-client-preset'
@@ -18,30 +18,6 @@ const client = new ApolloClient({
   link: new SchemaLink({ schema }),
   cache: new InMemoryCache()
 });
-
-const ChannelsList = () => (
-  <Query
-    query={gql`
-      {
-        channels {
-          id
-          name
-        }
-      }
-    `}
-  >
-    {({ loading, error, data }) => {
-      if (loading) return <p>Loading...</p>;
-      if (error) return <p>{error.message}</p>;
-
-      return (
-        <ul>
-          {data.channels.map(channel => <li key={channel.id}>{channel.name}</li>)}
-        </ul>
-      );
-    }}
-  </Query>
-);
 
 class App extends Component {
   render() {
